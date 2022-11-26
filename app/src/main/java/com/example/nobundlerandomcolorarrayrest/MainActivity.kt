@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.setMargins
 import com.example.nobundlerandomcolorarrayrest.databinding.ActivityMainBinding
@@ -13,29 +14,21 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        createRender()
-
-        binding.btnGenColor.setOnClickListener {
-            createRender()
+        viewModel.squares.observe(this){
+            renderSquares(it)
         }
 
-    }
+        binding.btnGenColor.setOnClickListener {
+            viewModel.generateSquares()
+        }
 
-    private fun createRender() {
-        renderSquares(createSquares())
-    }
-
-    private fun createSquares(): Squares {
-        return Squares(
-            size = Random.nextInt(5, 13),
-            colorProducer = { -Random.nextInt(0xFFFFFF) }
-        )
     }
 
     private fun renderSquares(squares: Squares) = with(binding) {
