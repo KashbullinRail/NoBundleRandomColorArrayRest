@@ -2,17 +2,16 @@ package com.example.nobundlerandomcolorarrayrest
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
-class MainViewModel: ViewModel() {
+class MainViewModel(
+    savedStateHandle: SavedStateHandle
+): ViewModel() {
 
-    private val _squares = MutableLiveData<Squares>()
+    private val _squares = savedStateHandle.getLiveData("squares", createSquares())
     val squares: LiveData<Squares> = _squares
-
-    init {
-        generateSquares()
-    }
 
     fun generateSquares(){
         _squares.value = createSquares()
