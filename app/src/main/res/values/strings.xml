@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NoBundleRandomColorArrayRest</string>
+    <string name="generate_color">Generate color</string>
 </resources>
